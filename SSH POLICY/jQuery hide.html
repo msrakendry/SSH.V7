@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sudan Sustainability Hub - Building Sustainable Communities</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <style>
+        :root {
+            --primary-green: #2d5a3d;
+            --accent-green: #4a7c59;
+            --light-green: #e8f5e9;
+            --blue: #1e5f8c;
+            --orange: #d9532c;
+            --yellow: #f4a524;
+            --dark: #1a1a1a;
+            --light: #f8f9fa;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Work Sans', sans-serif;
+            color: var(--dark);
+            overflow-x: hidden;
+            background: var(--white);
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: var(--primary-green);
+            padding: 1rem 2rem;
+            z-index: 1000;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            animation: slideDown 0.6s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        nav .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: var(--white);
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--yellow) 0%, var(--orange) 100%);
+            border-radius: 50% 50% 0 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: 900;
+            font-size: 1.2rem;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        nav a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            cursor: pointer;
+        }
+
+        nav a:not(.donate-btn):hover {
+            color: var(--yellow);
+        }
+
+        nav a:not(.donate-btn)::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--yellow);
+            transition: width 0.3s ease;
+        }
+
+        nav a:not(.donate-btn):hover::after {
+            width: 100%;
+        }
+
+        .donate-btn {
+            background: var(--orange);
+            padding: 0.7rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(217, 83, 44, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .donate-btn:hover {
+            background: #b8441f;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(217, 83, 44, 0.4);
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 80px;
+            height: 85vh;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(rgba(45, 90, 61, 0.4), rgba(45, 90, 61, 0.6)), 
+                        url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900"%3E%3Crect fill="%232d5a3d" width="1600" height="900"/%3E%3Cpath fill="%234a7c59" d="M0 600 Q400 500 800 600 T1600 600 L1600 900 L0 900 Z"/%3E%3C/svg%3E');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hero-content {
+            position: absolute;
+            bottom: 15%;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            color: var(--white);
+            width: 90%;
+            max-width: 900px;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translate(-50%, 30px);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, 0);
+            }
+        }
+
+        .hero-content h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 20px rgba(0,0,0,0.3);
+            letter-spacing: -1px;
+        }
+
+        .hero-content p {
+            font-size: 1.3rem;
+            font-weight: 300;
+            margin-bottom: 1.5rem;
+            text-shadow: 1px 1px 10px rgba(0,0,0,0.3);
+        }
+
+        /* Core Pillars Section */
+        .pillars {
+            padding: 6rem 2rem;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e8f5e9 100%);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3.5rem;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .section-title h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--dark);
+            margin-bottom: 0.8rem;
+        }
+
+        .section-title p {
+            font-size: 1.2rem;
+            color: #666;
+            font-weight: 300;
+        }
+
+        .pillars-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .pillar-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.08);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            animation: slideUp 0.6s ease-out both;
+        }
+
+        .pillar-card:nth-child(1) { animation-delay: 0.1s; }
+        .pillar-card:nth-child(2) { animation-delay: 0.2s; }
+        .pillar-card:nth-child(3) { animation-delay: 0.3s; }
+        .pillar-card:nth-child(4) { animation-delay: 0.4s; }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .pillar-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            transition: height 0.4s ease;
+        }
+
+        .pillar-card:nth-child(1)::before { background: var(--blue); }
+        .pillar-card:nth-child(2)::before { background: var(--orange); }
+        .pillar-card:nth-child(3)::before { background: var(--accent-green); }
+        .pillar-card:nth-child(4)::before { background: var(--yellow); }
+
+        .pillar-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.15);
+        }
+
+        .pillar-card:hover::before {
+            height: 100%;
+            opacity: 0.05;
+        }
+
+        .pillar-icon {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.4s ease;
+        }
+
+        .pillar-card:nth-child(1) .pillar-icon { 
+            background: linear-gradient(135deg, rgba(30, 95, 140, 0.1) 0%, rgba(30, 95, 140, 0.2) 100%); 
+        }
+        .pillar-card:nth-child(2) .pillar-icon { 
+            background: linear-gradient(135deg, rgba(217, 83, 44, 0.1) 0%, rgba(217, 83, 44, 0.2) 100%); 
+        }
+        .pillar-card:nth-child(3) .pillar-icon { 
+            background: linear-gradient(135deg, rgba(74, 124, 89, 0.1) 0%, rgba(74, 124, 89, 0.2) 100%); 
+        }
+        .pillar-card:nth-child(4) .pillar-icon { 
+            background: linear-gradient(135deg, rgba(244, 165, 36, 0.1) 0%, rgba(244, 165, 36, 0.2) 100%); 
+        }
+
+        .pillar-card:hover .pillar-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .icon-svg {
+            width: 50px;
+            height: 50px;
+        }
+
+        .pillar-card:nth-child(1) .icon-svg { fill: var(--blue); }
+        .pillar-card:nth-child(2) .icon-svg { fill: var(--orange); }
+        .pillar-card:nth-child(3) .icon-svg { fill: var(--accent-green); }
+        .pillar-card:nth-child(4) .icon-svg { fill: var(--yellow); }
+
+        .pillar-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .pillar-card p {
+            color: #555;
+            line-height: 1.7;
+            font-weight: 400;
+            margin-bottom: 2rem;
+        }
+
+        .pillar-btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            color: var(--white);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            cursor: pointer;
+        }
+
+        .pillar-card:nth-child(1) .pillar-btn { background: var(--blue); }
+        .pillar-card:nth-child(2) .pillar-btn { background: var(--orange); }
+        .pillar-card:nth-child(3) .pillar-btn { background: var(--accent-green); }
+        .pillar-card:nth-child(4) .pillar-btn { background: var(--yellow); }
+
+        .pillar-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        /* Projects Pages */
+        .livelihood-projects,
+        .energy-projects {
+            padding: 8rem 2rem 6rem;
+            min-height: 100vh;
+            display: none;
+        }
+
+        .livelihood-projects {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e8f5e9 100%);
+        }
+
+        .energy-projects {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e1f5fe 100%);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .project-card {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.08);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.15);
+        }
+
+        .project-image {
+            height: 250px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .project-status {
+            display: flex;
+            justify-content: space-between;
+            padding: 1.5rem;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .status-badge,
+        .location-badge {
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .status-badge.ongoing {
+            background: rgba(30, 95, 140, 0.1);
+            color: var(--blue);
+        }
+
+        .status-badge.new {
+            background: rgba(244, 165, 36, 0.1);
+            color: var(--orange);
+        }
+
+        .location-badge {
+            background: rgba(45, 90, 61, 0.1);
+            color: var(--primary-green);
+        }
+
+        .project-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            padding: 0 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .project-card p {
+            padding: 0 1.5rem;
+            color: #555;
+            line-height: 1.7;
+            margin-bottom: 2rem;
+        }
+
+        .support-btn {
+            width: calc(100% - 3rem);
+            margin: 0 1.5rem 1.5rem;
+            padding: 1rem;
+            background: var(--orange);
+            color: var(--white);
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .support-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        .support-btn.energy {
+            background: var(--accent-green);
+        }
+
+        .back-home-btn {
+            padding: 1rem 2.5rem;
+            background: var(--primary-green);
+            color: var(--white);
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .back-home-btn:hover {
+            background: var(--accent-green);
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary-green);
+            color: var(--white);
+            padding: 4rem 2rem 2rem;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-section p,
+        .footer-section ul {
+            color: rgba(255,255,255,0.9);
+            line-height: 1.8;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-section ul li::before {
+            content: '▸ ';
+            color: var(--yellow);
+            margin-right: 0.5rem;
+        }
+
+        .footer-section a {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--yellow);
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+            background: rgba(255,255,255,0.1);
+            padding: 0.5rem;
+            border-radius: 50px;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 50px;
+            background: transparent;
+            color: var(--white);
+        }
+
+        .newsletter-form input::placeholder {
+            color: rgba(255,255,255,0.6);
+        }
+
+        .newsletter-form button {
+            padding: 0.8rem 2rem;
+            background: var(--yellow);
+            color: var(--dark);
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-form button:hover {
+            background: var(--orange);
+            color: var(--white);
+        }
+
+        .newsletter-options {
+            margin-top: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            color: rgba(255,255,255,0.9);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            color: var(--white);
+            font-weight: bold;
+        }
+
+        .social-btn:hover {
+            background: var(--yellow);
+            color: var(--dark);
+            transform: translateY(-3px);
+        }
+
+        .footer-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+            padding: 2rem 0;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            margin-top: 2rem;
+        }
+
+        .badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: rgba(255,255,255,0.9);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.7);
+        }
+
+        .footer-bottom p {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav ul {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .section-title h2 {
+                font-size: 2.2rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.2rem;
+            }
+            
+            nav ul {
+                display: none;
+            }
+
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="logo">
+                <div class="logo-icon">SS</div>
+                SUDAN SUSTAINABILITY HUB
+            </div>
+            <ul>
+                <li><a class="nav-livelihood">Livelihood</a></li>
+                <li><a class="nav-water">Water</a></li>
+                <li><a class="nav-education">Education</a></li>
+                <li><a class="nav-power">Power</a></li>
+                <li><a href="#donate" class="donate-btn">♥ Donate Now</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-content">
+            <h1>Forest Pathway</h1>
+            <p>A serene path winding through a dense green forest.</p>
+        </div>
+    </section>
+
+    <!-- Core Pillars Section -->
+    <section class="pillars" id="home-pillars">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Core Pillars</h2>
+                <p>Four interconnected pillars for sustainable development</p>
+            </div>
+            <div class="pillars-grid">
+                
+                <!-- Clean Water -->
+                <div class="pillar-card">
+                    <div class="pillar-icon">
+                        <svg class="icon-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+                        </svg>
+                    </div>
+                    <h3>Clean Water</h3>
+                    <p>Digging wells, water purification systems, providing safe drinking water to communities in need</p>
+                    <a class="pillar-btn pillar-water">Water</a>
+                </div>
+
+                <!-- Livelihood -->
+                <div class="pillar-card">
+                    <div class="pillar-icon">
+                        <svg class="icon-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="4" y="7" width="16" height="10" rx="2"/>
+                            <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                        </svg>
+                    </div>
+                    <h3>Livelihood</h3>
+                    <p>Training programs, funding small projects, creating sustainable job opportunities, growing plant in small land</p>
+                    <a class="pillar-btn pillar-livelihood">Livelihood</a>
+                </div>
+
+                <!-- Renewable Energy -->
+                <div class="pillar-card">
+                    <div class="pillar-icon">
+                        <svg class="icon-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="3" y="3" width="7" height="7"/>
+                            <rect x="14" y="3" width="7" height="7"/>
+                            <rect x="14" y="14" width="7" height="7"/>
+                            <rect x="3" y="14" width="7" height="7"/>
+                        </svg>
+                    </div>
+                    <h3>Renewable Energy</h3>
+                    <p>Providing solar energy systems, training technicians, promoting clean energy</p>
+                    <a class="pillar-btn pillar-energy">Energy</a>
+                </div>
+
+                <!-- Quality Education -->
+                <div class="pillar-card">
+                    <div class="pillar-icon">
+                        <svg class="icon-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                            <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+                        </svg>
+                    </div>
+                    <h3>Quality Education</h3>
+                    <p>Building schools, providing scholarships, literacy programs, tackling care of outstanding</p>
+                    <a class="pillar-btn pillar-education">Education</a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Livelihood Projects Page -->
+    <section class="livelihood-projects" id="livelihood-page">
+        <div class="container">
+            <div class="section-title">
+                <h2>🧳 Livelihood Projects</h2>
+                <p>Empowering communities economically and creating sustainable job opportunities</p>
+            </div>
+            <div class="projects-grid">
+                
+                <!-- Project 1 -->
+                <div class="project-card">
+                    <div class="project-image" style="background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.4)), #3d5a80;"></div>
+                    <div class="project-status">
+                        <span class="status-badge ongoing">⏱ Ongoing</span>
+                        <span class="location-badge">📍 Several Countries</span>
+                    </div>
+                    <h3>Professional Training Programs</h3>
+                    <p>Training youth on skills such as electricity, carpentry, sewing and others</p>
+                    <button class="support-btn">Support the Project</button>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="project-card">
+                    <div class="project-image" style="background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.4)), #4a7c59;"></div>
+                    <div class="project-status">
+                        <span class="status-badge ongoing">⏱ Ongoing</span>
+                        <span class="location-badge">📍 Several Countries</span>
+                    </div>
+                    <h3>Small Business Financing</h3>
+                    <p>Providing microloans and administrative support to business owners</p>
+                    <button class="support-btn">Support the Project</button>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="project-card">
+                    <div class="project-image" style="background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.4)), #98c1d9;"></div>
+                    <div class="project-status">
+                        <span class="status-badge new">✨ New</span>
+                        <span class="location-badge">📍 5 Countries</span>
+                    </div>
+                    <h3>Electronic Marketing</h3>
+                    <p>Training on digital marketing to sell products locally and globally</p>
+                    <button class="support-btn">Support the Project</button>
+                </div>
+
+            </div>
+            <div style="text-align: center; margin-top: 3rem;">
+                <button class="back-home-btn" id="back-home-from-livelihood">← Back to Home</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Renewable Energy Projects Page -->
+    <section class="energy-projects" id="energy-page">
+        <div class="container">
+            <div class="section-title">
+                <h2>☀️ Renewable Energy Projects</h2>
+                <p>Providing sustainable and clean energy solutions</p>
+            </div>
+            <div class="projects-grid">
+                
+                <!-- Project 1 -->
+                <div class="project-card">
+                    <div class="project-image" style="background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.4)), #4a7c59;"></div>
+                    <div class="project-status">
+                        <span class="status-badge ongoing">⏱ Ongoing</span>
+                        <span class="location-badge">📍 10 Countries</span>
+                    </div>
+                    <h3>Domestic Solar Energy Systems</h3>
+                    <p>Providing integrated solar systems for homes in remote villages</p>
+                    <button class="support-btn energy">Support the Project</button>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="project-card">
+                    <div class="project-image" style="background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.4)), #293241;"></div>
+                    <div class="project-status">
+                        <span class="status-badge ongoing">⏱ Ongoing</span>
+                        <span class="location-badge">📍 7 Countries</span>
+                    </div>
+                    <h3>Street Lighting with Solar Energy</h3>
+                    <p>Installing solar street lights in streets and public places</p>
+                    <button class="support-btn energy">Support the Project</button>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="project-card">
+                    <div class="project-image" style="background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.4)), #3d5a80;"></div>
+                    <div class="project-status">
+                        <span class="status-badge new">✨ New</span>
+                        <span class="location-badge">📍 6 Countries</span>
+                    </div>
+                    <h3>Training Solar Energy Technicians</h3>
+                    <p>Training youth in installing and maintaining solar energy systems</p>
+                    <button class="support-btn energy">Support the Project</button>
+                </div>
+
+            </div>
+            <div style="text-align: center; margin-top: 3rem;">
+                <button class="back-home-btn" id="back-home-from-energy">← Back to Home</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            
+            <!-- About -->
+            <div class="footer-section">
+                <h3>The Sudanese Sustainability Hub</h3>
+                <p>We have been working to provide clean water, create livelihood opportunities, renewable energy, and quality education for communities in need since 2010.</p>
+                <div class="social-links">
+                    <div class="social-btn">f</div>
+                    <div class="social-btn">t</div>
+                    <div class="social-btn">in</div>
+                    <div class="social-btn">ig</div>
+                </div>
+            </div>
+
+            <!-- Focus Areas -->
+            <div class="footer-section">
+                <h3>Our Focus Areas</h3>
+                <ul>
+                    <li><a href="#">Clean Water</a></li>
+                    <li><a href="#">Livelihood</a></li>
+                    <li><a href="#">Renewable Energy</a></li>
+                    <li><a href="#">Education</a></li>
+                </ul>
+                <h3 style="margin-top: 2rem;">Quick Links</h3>
+                <ul>
+                    <li><a href="#">Our Current Projects</a></li>
+                    <li><a href="#">Our Impact</a></li>
+                    <li><a href="#">Organization Store <span style="color: var(--yellow);">New</span></a></li>
+                </ul>
+            </div>
+
+            <!-- Contact -->
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <span>📍 Hay Al-Olya, Riyadh, Kingdom</span>
+                    </div>
+                    <div class="contact-item">
+                        <span>📞 9200-12345</span>
+                    </div>
+                    <div class="contact-item">
+                        <span>✉️ info@sustainablehub.org</span>
+                    </div>
+                    <div class="contact-item">
+                        <span>🕐 Tuesday</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Newsletter -->
+            <div class="footer-section">
+                <h3>Newsletter</h3>
+                <p>Subscribe to our newsletter to receive the latest news and reports</p>
+                <form class="newsletter-form" id="newsletterForm">
+                    <input type="email" placeholder="Enter your email" required>
+                    <button type="submit">Subscribe</button>
+                </form>
+                <div class="newsletter-options">
+                    <label class="checkbox-label">
+                        <input type="checkbox" checked class="newsletter-option" data-option="updates">
+                        <span>Project Updates</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" class="newsletter-option" data-option="reports">
+                        <span>Impact Reports</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" class="newsletter-option" data-option="volunteer">
+                        <span>Volunteer Opportunities</span>
+                    </label>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Badges -->
+        <div class="footer-badges">
+            <div class="badge">
+                <span>🔒 Secure and Encrypted</span>
+            </div>
+            <div class="badge">
+                <span>📜 ISO 14001:2015</span>
+            </div>
+            <div class="badge">
+                <span>✅ Environmentally Friendly</span>
+            </div>
+            <div class="badge">
+                <span>🌍 United Nations Member</span>
+            </div>
+            <div class="badge">
+                <span>⭐ Sustainability Award 2023</span>
+            </div>
+        </div>
+
+        <!-- Footer Bottom -->
+        <div class="footer-bottom">
+            <p>Commercial Registration: 987654 | Development License: 54321 | Tax License: SA123456789</p>
+            <p style="margin-top: 1rem;">Thank you for supporting a sustainable future</p>
+            <p style="margin-top: 0.5rem;">© 2024 Sudan Sustainability Hub. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // jQuery Document Ready
+        $(document).ready(function() {
+            // Page navigation functions with jQuery
+            $('.nav-livelihood, .pillar-livelihood').on('click', function(e) {
+                e.preventDefault();
+                $('#hero').hide();
+                $('#home-pillars').hide();
+                $('#livelihood-page').show();
+                $('#energy-page').hide();
+                $('html, body').animate({ scrollTop: 0 }, 500);
+            });
+
+            $('.nav-power, .pillar-energy').on('click', function(e) {
+                e.preventDefault();
+                $('#hero').hide();
+                $('#home-pillars').hide();
+                $('#livelihood-page').hide();
+                $('#energy-page').show();
+                $('html, body').animate({ scrollTop: 0 }, 500);
+            });
+
+            $('#back-home-from-livelihood, #back-home-from-energy').on('click', function(e) {
+                e.preventDefault();
+                showHomePage();
+            });
+
+            $('.nav-water, .pillar-water').on('click', function(e) {
+                e.preventDefault();
+                alert('The Water page will be available soon!');
+            });
+
+            $('.nav-education, .pillar-education').on('click', function(e) {
+                e.preventDefault();
+                alert('The Education page will be available soon!');
+            });
+
+            $('.donate-btn').on('click', function(e) {
+                e.preventDefault();
+                alert('Thank you for your interest in donating to Sudan Sustainability Hub!\n\nIn a real implementation, this would redirect to a donation page.');
+            });
+
+            // Support buttons
+            $('.support-btn').on('click', function() {
+                const projectTitle = $(this).closest('.project-card').find('h3').text();
+                alert(`Thank you for your interest in supporting: "${projectTitle}"!\n\nIn a real implementation, this would open a donation form for this specific project.`);
+            });
+
+            // Newsletter form submission
+            $('#newsletterForm').on('submit', function(e) {
+                e.preventDefault();
+                const email = $(this).find('input[type="email"]').val();
+                const options = [];
+                
+                $('.newsletter-option:checked').each(function() {
+                    options.push($(this).data('option'));
+                });
+                
+                if (email) {
+                    alert(`Thank you for subscribing to our newsletter!\n\nEmail: ${email}\nPreferences: ${options.length > 0 ? options.join(', ') : 'None selected'}`);
+                    $(this).find('input[type="email"]').val('');
+                    $('.newsletter-option').prop('checked', false);
+                    $('.newsletter-option[data-option="updates"]').prop('checked', true);
+                }
+            });
+
+            // Social buttons
+            $('.social-btn').on('click', function() {
+                const platform = $(this).text();
+                alert(`In a real implementation, this would redirect to our ${platform} social media page.`);
+            });
+
+            // Hover effects for cards
+            $('.pillar-card, .project-card').hover(
+                function() {
+                    $(this).addClass('hover-active');
+                },
+                function() {
+                    $(this).removeClass('hover-active');
+                }
+            );
+
+            // Scroll animations
+            $(window).on('scroll', function() {
+                $('.pillar-card, .project-card').each(function() {
+                    const rect = $(this)[0].getBoundingClientRect();
+                    if (rect.top < window.innerHeight - 100) {
+                        $(this).css({
+                            'opacity': '1',
+                            'transform': 'translateY(0)'
+                        });
+                    }
+                });
+            });
+
+            // Initialize scroll animation
+            $(window).trigger('scroll');
+        });
+
+        // Function to show home page (kept for backward compatibility)
+        function showHomePage() {
+            $('#hero').show();
+            $('#home-pillars').show();
+            $('#livelihood-page').hide();
+            $('#energy-page').hide();
+            $('html, body').animate({ scrollTop: 0 }, 500);
+        }
+
+        // Function to show page (kept for backward compatibility)
+        function showPage(page, event) {
+            if (event) event.preventDefault();
+            alert('The ' + page.charAt(0).toUpperCase() + page.slice(1) + ' page will be available soon!');
+        }
+
+        // Show livelihood projects (kept for backward compatibility)
+        function showLivelihoodProjects(event) {
+            if (event) event.preventDefault();
+            $('#hero').hide();
+            $('#home-pillars').hide();
+            $('#livelihood-page').show();
+            $('#energy-page').hide();
+            $('html, body').animate({ scrollTop: 0 }, 500);
+        }
+
+        // Show energy projects (kept for backward compatibility)
+        function showEnergyProjects(event) {
+            if (event) event.preventDefault();
+            $('#hero').hide();
+            $('#home-pillars').hide();
+            $('#livelihood-page').hide();
+            $('#energy-page').show();
+            $('html, body').animate({ scrollTop: 0 }, 500);
+        }
+    </script>
+
+</body>
+</html>

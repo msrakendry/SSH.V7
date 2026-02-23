@@ -1,0 +1,182 @@
+/* ============================================
+   FULL-SCREEN MOBILE MENU OVERLAY
+   Based on provided design image
+   ============================================ */
+
+/* Mobile Menu Overlay Container */
+.mobile-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #0a4d0a 0%, #1e7e1e 100%);
+    z-index: 9999;
+    display: none;
+    overflow-y: auto;
+    transition: opacity 0.3s ease;
+}
+
+.mobile-menu-overlay.active {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* Menu Header */
+.mobile-menu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 25px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.mobile-menu-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: white;
+    letter-spacing: 2px;
+}
+
+.mobile-menu-close {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s;
+}
+
+.mobile-menu-close:hover {
+    transform: rotate(90deg);
+}
+
+/* Menu Content */
+.mobile-menu-content {
+    padding: 30px 25px;
+}
+
+/* Main Category Items */
+.mobile-category-item {
+    margin-bottom: 25px;
+}
+
+.mobile-category-title {
+    font-size: .7rem;
+    font-weight: 800;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 15px 0;
+    border: none;
+    background: transparent;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+}
+
+.mobile-category-title::after {
+    content: '+';
+    position: absolute;
+    right: 10px;
+    font-size: 1rem;
+    transition: transform 0.3s;
+}
+
+.mobile-category-title.expanded::after {
+    content: '−';
+}
+
+.mobile-category-title:active {
+    transform: scale(0.98);
+}
+
+/* Subcategory Container */
+.mobile-subcategory {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.mobile-subcategory.expanded {
+    max-height: 500px;
+}
+
+/* Section Header */
+.mobile-section-header {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.6);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin: 20px 0 15px 0;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Subcategory Links */
+.mobile-subcategory-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.mobile-subcategory-item {
+    margin-bottom: 0;
+}
+
+.mobile-subcategory-link {
+    display: block;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 400;
+    padding: 12px 0;
+    text-decoration: none;
+    transition: all 0.2s;
+    border-left: 3px solid transparent;
+    padding-left: 15px;
+}
+
+.mobile-subcategory-link:hover {
+    border-left-color: white;
+    padding-left: 20px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .mobile-menu-overlay {
+        display: none;
+    }
+
+    .mobile-menu-overlay.active {
+        display: block;
+    }
+}
+
+@media (min-width: 769px) {
+    .mobile-menu-overlay {
+        display: none !important;
+    }
+}
+
+/* Prevent body scroll when menu is open */
+body.mobile-menu-open {
+    overflow: hidden;
+}

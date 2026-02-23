@@ -1,0 +1,72 @@
+/* Responsive Styles for Social Media Section */
+
+/* Mobile Devices (< 768px) */
+@media (max-width: 767px) {
+    .social-links {
+        display: flex !important;
+        justify-content: center !important;
+        width: 100% !important;
+        margin-top: 30px !important;
+        padding-bottom: 20px !important;
+    }
+
+    .main {
+        width: 100% !important;
+        max-width: 300px !important;
+        margin: 0 auto !important;
+    }
+
+    /* Force visibility of icons on mobile since hover is unreliable */
+    .cardF .instagram,
+    .cardF .twitter,
+    .cardF .facebook,
+    .cardF .linkedin,
+    .cardF .reddit,
+    .cardF .github,
+    .cardF .telegram,
+    .cardF .discord,
+    .cardF .codepen,
+    .cardF .dribble,
+    .cardF .uiverse {
+        opacity: 1 !important;
+    }
+
+    .main:hover .text{
+        text-align: none;
+        opacity: 0 !important ;
+        visibility: hidden !important;
+    }
+
+    .cardF {
+        margin: 5px !important;
+        border-radius: 10px !important;
+        background: rgba(255, 255, 255, 0.3) !important;
+    }
+
+    .main_back {
+        width: 13em !important;
+        height: 3em !important; 
+        opacity: 1 !important; /* Keep a hint of the background */
+    }
+    .main .cardF a svg{
+        width: 20px !important;
+        height:10px;
+    }
+    .main .cardF .F-set svg{
+        width: 11px !important;
+        height:10px;
+        }
+    .main .cardF{
+        height: 35px !important;
+        width: 40px !important;
+    }
+}
+
+/* Tablet Devices (768px to 1024px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .social-links {
+        display: flex;
+        justify-content: center;
+        margin-top: 25px;
+    }
+}

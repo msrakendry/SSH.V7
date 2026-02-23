@@ -1,0 +1,2456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sudan Sustainability Hub - Policy Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        /* Login Modal */
+        .login-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .login-modal.active {
+            display: flex;
+        }
+        
+        .login-container {
+            background: linear-gradient(135deg, #0a4d0a 0%, #1e7e1e 100%);
+            width: 90%;
+            max-width: 450px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            animation: slideIn 0.5s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .login-header {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            text-align: center;
+            color: white;
+        }
+        
+        .login-header h2 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .login-header p {
+            color: #c8e6c9;
+            font-size: 14px;
+        }
+        
+        .login-body {
+            padding: 30px;
+            background-color: white;
+        }
+        
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .form-label {
+            font-weight: 600;
+            color: #0a4d0a;
+            font-size: 14px;
+        }
+        
+        .form-input {
+            padding: 14px 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #0a4d0a;
+            box-shadow: 0 0 0 3px rgba(10, 77, 10, 0.1);
+        }
+        
+        .login-btn {
+            background: linear-gradient(135deg, #0a4d0a 0%, #1e7e1e 100%);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+        
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(10, 77, 10, 0.3);
+        }
+        
+        .login-footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-top: 1px solid #eee;
+        }
+        
+        .login-footer p {
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+        
+        .close-login {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 2001;
+        }
+        
+        /* Admin Controls */
+        .admin-controls {
+            background: linear-gradient(135deg, #2c3e50 0%, #4a6491 100%);
+            color: white;
+            padding: 15px 30px;
+            display: none;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .admin-controls.active {
+            display: flex;
+        }
+        
+        .admin-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .admin-avatar {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: #2c3e50;
+        }
+        
+        .admin-details h4 {
+            font-size: 16px;
+            margin-bottom: 3px;
+        }
+        
+        .admin-details p {
+            font-size: 12px;
+            color: #bdc3c7;
+        }
+        
+        .admin-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .admin-btn {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .admin-btn:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .admin-btn.logout {
+            background-color: #e74c3c;
+            border-color: #e74c3c;
+        }
+        
+        .admin-btn.logout:hover {
+            background-color: #c0392b;
+        }
+        
+        /* Permission Badge */
+        .permission-badge {
+            background-color: #9b59b6;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        
+        /* Top Header */
+        .top-header {
+            display: none;
+            background: linear-gradient(135deg, #0a4d0a 0%, #1e7e1e 100%);
+            color: white;
+            padding: 12px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo-circle {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 28px;
+            color: #0a4d0a;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .logo-abbr {
+            font-size: 32px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            line-height: 1;
+        }
+        
+        .logo-full {
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        
+        .header-nav {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+        
+        .nav-item-top {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 16px;
+            padding: 8px 0;
+            position: relative;
+            transition: all 0.3s;
+        }
+        
+        .nav-item-top:hover {
+            color: #ffd700;
+        }
+        
+        .nav-item-top:hover::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: #ffd700;
+            border-radius: 2px;
+        }
+        
+        .donate-btn {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            color: #0a4d0a;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-left: 15px;
+        }
+        
+        .donate-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+        }
+        
+        .login-link {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .login-link:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .container {
+            display: flex;
+            min-height: calc(100vh - 84px);
+        }
+        
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 250px;
+            background-color: #1a472a;
+            color: #ecf0f1;
+            padding: 20px 0;
+            flex-shrink: 0;
+        }
+        
+        .sidebar-logo {
+            padding: 0 20px 20px;
+            border-bottom: 1px solid #2d5a3a;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .nav-menu {
+            list-style: none;
+        }
+        
+        .nav-item {
+            border-bottom: 1px solid #2d5a3a;
+            position: relative;
+        }
+        
+        .nav-link {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 20px;
+            color: #c8e6c9;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            background-color: #2d5a3a;
+            color: #fff;
+            border-left: 4px solid #ffd700;
+        }
+        
+        .nav-link i {
+            margin-right: 12px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .nav-text {
+            flex-grow: 1;
+        }
+        
+        /* Badge Styling */
+        .nav-badge {
+            background-color: #e74c3c;
+            color: white;
+            font-size: 11px;
+            font-weight: bold;
+            padding: 3px 8px;
+            border-radius: 10px;
+            margin-left: 10px;
+            display: none;
+            animation: badgePulse 2s infinite;
+        }
+        
+        /* Active badge (current page) */
+        .nav-badge.active {
+            background-color: #2ecc71;
+            display: inline-block;
+        }
+        
+        /* Index badge (for Index item) */
+        .nav-badge.index {
+            background-color: #9b59b6;
+            display: inline-block;
+        }
+        
+        /* Notification badge (for other items) */
+        .nav-badge.notification {
+            background-color: #f39c12;
+            display: inline-block;
+        }
+        
+        @keyframes badgePulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        /* Main Content Area */
+        .main-content {
+            flex-grow: 1;
+            padding: 30px;
+            overflow-y: auto;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .breadcrumb {
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+        
+        .breadcrumb a {
+            color: #0a4d0a;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        .breadcrumb span {
+            color: #7f8c8d;
+        }
+        
+        .search-box {
+            position: relative;
+            width: 300px;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 10px 15px 10px 40px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #95a5a6;
+        }
+        
+        /* Content Sections */
+        .content-section {
+            display: none;
+        }
+        
+        .content-section.active {
+            display: block;
+        }
+        
+        /* Badge Controls */
+        .badge-controls {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            padding: 20px;
+            margin-bottom: 30px;
+            border-top: 4px solid #0a4d0a;
+        }
+        
+        .badge-controls h3 {
+            color: #0a4d0a;
+            margin-bottom: 15px;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .badge-controls h3 i {
+            margin-right: 10px;
+            color: #0a4d0a;
+        }
+        
+        .badge-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .badge-btn {
+            background-color: #0a4d0a;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+        
+        .badge-btn:hover {
+            background-color: #1e7e1e;
+        }
+        
+        .badge-btn.clear {
+            background-color: #e74c3c;
+        }
+        
+        .badge-btn.clear:hover {
+            background-color: #c0392b;
+        }
+        
+        .badge-btn.notify {
+            background-color: #f39c12;
+        }
+        
+        .badge-btn.notify:hover {
+            background-color: #d68910;
+        }
+        
+        .badge-btn.index-btn {
+            background-color: #9b59b6;
+        }
+        
+        .badge-btn.index-btn:hover {
+            background-color: #8e44ad;
+        }
+        
+        /* Policy Content */
+        .policy-container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 40px;
+            margin-bottom: 30px;
+            border-top: 4px solid #0a4d0a;
+        }
+        
+        .policy-header {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .policy-header h1 {
+            font-size: 32px;
+            color: #0a4d0a;
+            margin-bottom: 10px;
+        }
+        
+        .policy-header .policy-code {
+            color: #7f8c8d;
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+        
+        .policy-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .sectionP {
+            margin-bottom: 40px;
+        }
+        
+        .sectionP h2 {
+            font-size: 22px;
+            color: #0a4d0a;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .sectionP p {
+            margin-bottom: 15px;
+            color: #555;
+        }
+        
+        .sectionP ul {
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .sectionP li {
+            margin-bottom: 8px;
+            color: #555;
+        }
+        
+        .sectionP li strong {
+            color: #0a4d0a;
+        }
+        
+        .policy-info {
+            background-color: #f0f9f0;
+            border-left: 4px solid #0a4d0a;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .policy-info h3 {
+            color: #0a4d0a;
+            margin-bottom: 10px;
+        }
+        
+        /* Index Content */
+        .index-container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 40px;
+            margin-bottom: 30px;
+            border-top: 4px solid #9b59b6;
+        }
+        
+        .index-header-section {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .index-header-section h1 {
+            font-size: 32px;
+            color: #9b59b6;
+            margin-bottom: 10px;
+        }
+        
+        .index-header-section .index-subtitle {
+            color: #7f8c8d;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+        }
+        
+        .index-search-section {
+            margin-bottom: 30px;
+        }
+        
+        .index-search-box {
+            position: relative;
+            width: 100%;
+            margin-bottom: 25px;
+        }
+        
+        .index-search-box input {
+            width: 100%;
+            padding: 15px 20px 15px 50px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        .index-search-box input:focus {
+            outline: none;
+            border-color: #9b59b6;
+            box-shadow: 0 0 0 3px rgba(155, 89, 182, 0.1);
+        }
+        
+        .index-search-box i {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #95a5a6;
+            font-size: 18px;
+        }
+        
+        .alphabet-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-bottom: 20px;
+            justify-content: center;
+        }
+        
+        .alphabet-letter {
+            display: inline-block;
+            width: 36px;
+            height: 36px;
+            line-height: 36px;
+            text-align: center;
+            background-color: #ecf0f1;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+        
+        .alphabet-letter:hover, .alphabet-letter.active {
+            background-color: #9b59b6;
+            color: white;
+        }
+        
+        /* File Upload Section (Admin Only) */
+        .file-upload-section {
+            background-color: #f0f9f0;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-left: 4px solid #0a4d0a;
+            position: relative;
+            display: none;
+        }
+        
+        .file-upload-section.active {
+            display: block;
+        }
+        
+        .admin-only-label {
+            position: absolute;
+            top: -10px;
+            right: 20px;
+            background-color: #9b59b6;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .file-upload-section h3 {
+            color: #0a4d0a;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .file-upload-section h3 i {
+            margin-right: 10px;
+        }
+        
+        .upload-area {
+            border: 2px dashed #0a4d0a;
+            border-radius: 8px;
+            padding: 40px 20px;
+            text-align: center;
+            background-color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 20px;
+        }
+        
+        .upload-area:hover {
+            background-color: #f8fff8;
+            border-color: #1e7e1e;
+        }
+        
+        .upload-area i {
+            font-size: 48px;
+            color: #0a4d0a;
+            margin-bottom: 15px;
+        }
+        
+        .upload-text {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 10px;
+        }
+        
+        .upload-subtext {
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+        
+        .upload-btn {
+            background-color: #0a4d0a;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: background-color 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .upload-btn:hover {
+            background-color: #1e7e1e;
+        }
+        
+        .upload-btn i {
+            font-size: 18px;
+        }
+        
+        .uploaded-files {
+            margin-top: 25px;
+        }
+        
+        .uploaded-files h4 {
+            color: #0a4d0a;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .file-list {
+            list-style: none;
+        }
+        
+        .file-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background-color: white;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            border-left: 3px solid #0a4d0a;
+        }
+        
+        .file-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .file-icon {
+            font-size: 24px;
+            color: #0a4d0a;
+        }
+        
+        .file-details h5 {
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .file-size {
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+        
+        .file-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .download-btn, .delete-btn {
+            padding: 8px 15px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.2s;
+        }
+        
+        .download-btn {
+            background-color: #0a4d0a;
+            color: white;
+        }
+        
+        .download-btn:hover {
+            background-color: #1e7e1e;
+        }
+        
+        .delete-btn {
+            background-color: #f8f9fa;
+            color: #e74c3c;
+            border: 1px solid #e74c3c;
+        }
+        
+        .delete-btn:hover {
+            background-color: #e74c3c;
+            color: white;
+        }
+        
+        .policy-filters {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .filter-group {
+            margin-bottom: 10px;
+        }
+        
+        .filter-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .filter-select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: white;
+            font-size: 14px;
+        }
+        
+        .policy-list-container {
+            border-top: 2px solid #eee;
+            padding-top: 25px;
+        }
+        
+        .policy-letter-group {
+            margin-bottom: 30px;
+        }
+        
+        .policy-letter {
+            font-size: 24px;
+            font-weight: bold;
+            color: #9b59b6;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 3px solid #9b59b6;
+            display: flex;
+            align-items: center;
+        }
+        
+        .policy-letter i {
+            margin-right: 10px;
+        }
+        
+        .policy-item {
+            padding: 15px 20px;
+            border-left: 4px solid #eee;
+            margin-bottom: 10px;
+            transition: all 0.2s;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: white;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .policy-item:hover {
+            background-color: #f8f0ff;
+            border-left-color: #9b59b6;
+            transform: translateX(5px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .policy-item-title {
+            font-weight: 500;
+            color: #333;
+            font-size: 16px;
+        }
+        
+        .policy-item-meta {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .policy-item-area {
+            background-color: #e8f5e8;
+            color: #0a4d0a;
+            padding: 5px 10px;
+            border-radius: 12px;
+            font-weight: 500;
+            font-size: 12px;
+        }
+        
+        .policy-file-info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 5px;
+        }
+        
+        .policy-file-type {
+            color: #7f8c8d;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .policy-file-type i {
+            color: #0a4d0a;
+        }
+        
+        .policy-download-btn {
+            background-color: #0a4d0a;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background-color 0.3s;
+        }
+        
+        .policy-download-btn:hover {
+            background-color: #1e7e1e;
+        }
+        
+        /* Index & Glossary Section */
+        .index-glossary {
+            display: flex;
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .index-box, .glossary-box {
+            flex: 1;
+            background-color: #f0f9f0;
+            padding: 25px;
+            border-radius: 6px;
+            border-top: 4px solid #0a4d0a;
+        }
+        
+        .index-box h3, .glossary-box h3 {
+            color: #0a4d0a;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .index-box h3 i, .glossary-box h3 i {
+            margin-right: 10px;
+            color: #0a4d0a;
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #7f8c8d;
+            font-size: 14px;
+            border-top: 1px solid #eee;
+            margin-top: 30px;
+            background-color: #f8f9fa;
+        }
+        
+        .footer-logo {
+            color: #0a4d0a;
+            font-weight: 700;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1100px) {
+            .header-nav {
+                gap: 15px;
+            }
+            
+            .nav-item-top {
+                font-size: 14px;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .top-header {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px 20px;
+            }
+            
+            .header-nav {
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            .container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                padding: 10px 0;
+            }
+            
+            .sidebar-logo {
+                display: block;
+            }
+            
+            .nav-menu {
+                display: flex;
+                overflow-x: auto;
+            }
+            
+            .nav-item {
+                border-bottom: none;
+                border-right: 1px solid #2d5a3a;
+            }
+            
+            .nav-link {
+                white-space: nowrap;
+            }
+            
+            .index-glossary {
+                flex-direction: column;
+            }
+            
+            .admin-controls {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+            
+            .admin-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .search-box {
+                width: 100%;
+                margin-top: 15px;
+            }
+            
+            .policy-container, .index-container {
+                padding: 25px;
+            }
+            
+            .policy-header h1, .index-header-section h1 {
+                font-size: 26px;
+            }
+            
+            .badge-buttons {
+                flex-direction: column;
+            }
+            
+            .badge-btn {
+                width: 100%;
+            }
+            
+            .policy-filters {
+                grid-template-columns: 1fr;
+            }
+            
+            .header-nav {
+                gap: 10px;
+            }
+            
+            .nav-item-top {
+                font-size: 13px;
+            }
+            
+            .donate-btn {
+                padding: 10px 20px;
+                font-size: 14px;
+                margin-left: 0;
+            }
+            
+            .policy-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .policy-item-meta {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .policy-file-info {
+                flex-direction: row;
+                justify-content: space-between;
+                width: 100%;
+            }
+            
+            .file-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .file-actions {
+                width: 100%;
+                justify-content: flex-end;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .logo-container {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+            
+            .header-nav {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .nav-item-top {
+                font-size: 15px;
+            }
+            
+            .alphabet-letter {
+                width: 30px;
+                height: 30px;
+                line-height: 30px;
+                font-size: 14px;
+            }
+            
+            .upload-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+<div id="policy">
+    <!-- Login Modal -->
+    <div class="login-modal" id="loginModal">
+        <div class="login-container">
+            <div class="login-header">
+                <h2><i class="fas fa-lock"></i> Admin Login</h2>
+                <p>Access the SSH Policy Management System</p>
+            </div>
+            <div class="login-body">
+                <form class="login-form" id="loginForm">
+                    <div class="form-group">
+                        <label class="form-label">Username</label>
+                        <input type="text" class="form-input" id="username" placeholder="Enter admin username" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Password</label>
+                        <input type="password" class="form-input" id="password" placeholder="Enter password" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Role</label>
+                        <select class="form-input" id="role">
+                            <option value="admin">Administrator</option>
+                            <option value="editor">Editor</option>
+                            <option value="viewer">Viewer</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="login-btn">
+                        <i class="fas fa-sign-in-alt"></i> Login to System
+                    </button>
+                </form>
+                <div style="margin-top: 20px; padding: 15px; background-color: #f8f9fa; border-radius: 8px;">
+                    <h4 style="color: #0a4d0a; margin-bottom: 10px;">Demo Credentials:</h4>
+                    <p style="font-size: 13px; color: #555;">
+                        <strong>Admin:</strong> admin / admin123 (upload access)<br>
+                        <strong>Editor:</strong> editor / editor123<br>
+                        <strong>Viewer:</strong> viewer / viewer123
+                    </p>
+                </div>
+            </div>
+            <div class="login-footer">
+                <p>Sudan Sustainability Hub Policy Portal v2.0</p>
+            </div>
+        </div>
+        <button class="close-login" id="closeLogin">&times;</button>
+    </div>
+
+    <!-- Admin Controls -->
+    <div class="admin-controls" id="adminControls">
+        <div class="admin-info">
+            <div class="admin-avatar" id="adminAvatar">A</div>
+            <div class="admin-details">
+                <h4 id="adminName">Administrator</h4>
+                <p id="adminRole">System Administrator</p>
+            </div>
+            <div class="permission-badge" id="permissionBadge">UPLOAD ACCESS</div>
+        </div>
+        <div class="admin-actions">
+            <button class="admin-btn logout" id="logoutBtn">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
+    </div>
+
+    <!-- Top Header -->
+    <header class="top-header display-none" id="topHeader">
+        <div class="logo-container">
+            <div class="logo-circle">SSH</div>
+            <div class="logo-text">
+                <div class="logo-abbr">SSH</div>
+                <div class="logo-full">SUDAN SUSTAINABILITY HUB</div>
+            </div>
+        </div>
+        
+        <nav class="header-nav">
+            <a href="#" class="nav-item-top">Livelihood</a>
+            <a href="#" class="nav-item-top">Water</a>
+            <a href="#" class="nav-item-top">Education</a>
+            <a href="#" class="nav-item-top">Power</a>
+            <a href="#" class="nav-item-top">Health</a>
+            <a href="#" class="nav-item-top">Environment</a>
+            <a href="#" class="nav-item-top">Community</a>
+            <button class="donate-btn">Donate Now</button>
+            <button class="login-link" id="showLogin">
+                <i class="fas fa-user-shield"></i> Admin Login
+            </button>
+        </nav>
+    </header>
+
+    <div class="container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <div class="logo-text">
+                    <div class="logo-abbr" style="font-size: 24px; color: #ffd700;">SSH</div>
+                    <div class="logo-full" style="font-size: 14px;">POLICIES</div>
+                </div>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#" class="nav-link active" data-page="home">
+                        <div class="nav-text">
+                            <i class="fas fa-home"></i> Home
+                        </div>
+                        <span class="nav-badge active">Active</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-page="accountability">
+                        <div class="nav-text">
+                            <i class="fas fa-balance-scale"></i> Accountability
+                        </div>
+                        <span class="nav-badge">1</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-page="policies">
+                        <div class="nav-text">
+                            <i class="fas fa-file-alt"></i> Policies & Procedures
+                        </div>
+                        <span class="nav-badge">3</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-page="policy-areas">
+                        <div class="nav-text">
+                            <i class="fas fa-book"></i> Policy Areas
+                        </div>
+                        <span class="nav-badge notification">New</span>
+                    </a>
+                </li>
+                <li class="nav-item" id="index-nav-item">
+                    <a href="#" class="nav-link index-link" data-page="index">
+                        <div class="nav-text">
+                            <i class="fas fa-list-ol"></i> Index
+                        </div>
+                        <span class="nav-badge"></span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-page="glossary">
+                        <div class="nav-text">
+                            <i class="fas fa-bookmark"></i> Glossary
+                        </div>
+                        <span class="nav-badge">2</span>
+                    </a>
+                </li>
+            </ul>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <div class="header">
+                <div class="breadcrumb" id="breadcrumb">
+                    <a href="#" data-page="home">HOME</a> / <a href="#" data-page="accountability">ACCOUNTABILITY</a> / <a href="#" data-page="policy">ACCOUNTABILITY SYSTEM POLICY</a> / <span>ACCOUNTABILITY SYSTEM POLICY</span>
+                </div>
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search policies...">
+                </div>
+            </div>
+            
+            <!-- Badge Controls -->
+            <div class="badge-controls">
+                <h3><i class="fas fa-bell"></i> Navigation Badge System</h3>
+                <p style="margin-bottom: 15px; color: #666;">Click on navigation items to activate their badge. Click "Index" to open the policy index.</p>
+                <div class="badge-buttons">
+                    <button class="badge-btn" id="add-badges">Add Badges to All Items</button>
+                    <button class="badge-btn clear" id="clear-badges">Clear All Badges</button>
+                    <button class="badge-btn notify" id="random-badges">Add Random Notification Badges</button>
+                    <button class="badge-btn index-btn" id="open-index">Open Policy Index</button>
+                </div>
+            </div>
+            
+            <!-- Home Content (Default) -->
+            <div id="home-content" class="content-section active">
+                <!-- Policy Content -->
+                <div class="policy-container">
+                    <div class="policy-header">
+                        <h1>ACCOUNTABILITY SYSTEM POLICY</h1>
+                        <div class="policy-code">Policy Ref: SSH-ASP-2023-001 | Version: 3.2 | Effective Date: 01/10/2023</div>
+                    </div>
+
+                    <div class="policy-content">
+                        <div class="sectionP">
+                            <h2>1. Policy Statement</h2>
+                            <p>This Accountability System Policy establishes the framework for ensuring that all personnel within the Sudan Sustainability Hub understand their roles, responsibilities, and obligations. It outlines the mechanisms for monitoring performance, addressing deficiencies, and recognizing achievements in alignment with our sustainability objectives.</p>
+                            <p>The policy applies to all employees, contractors, and volunteers engaged in SSH's operations and programs across Livelihood, Water, Education, Power, and other key areas.</p>
+                        </div>
+
+                        <div class="sectionP">
+                            <h2>2. Purpose and Scope</h2>
+                            <p>The purpose of this policy is to:</p>
+                            <ul>
+                                <li>Define clear accountability structures throughout SSH</li>
+                                <li>Establish standards for performance measurement and reporting</li>
+                                <li>Provide a framework for corrective action when standards are not met</li>
+                                <li>Promote a culture of transparency and responsibility</li>
+                                <li>Ensure compliance with relevant legal and regulatory requirements</li>
+                                <li>Support SSH's mission of sustainable development in Sudan</li>
+                            </ul>
+                        </div>
+
+                        <div class="policy-info">
+                            <h3><i class="fas fa-info-circle"></i> Simple Download & Upload System</h3>
+                            <p><strong>For Everyone:</strong> All policy documents can be downloaded without login or permissions.</p>
+                            <p><strong>For Admins Only:</strong> File upload functionality is only available to logged-in administrators.</p>
+                            <p>Click the "Admin Login" button in the top right to access upload features.</p>
+                        </div>
+
+                        <div class="sectionP">
+                            <h2>3. Core Principles</h2>
+                            <p>The Accountability System is built upon the following core principles aligned with SSH values:</p>
+                            <ul>
+                                <li><strong>Clarity:</strong> All roles and responsibilities must be clearly defined and communicated</li>
+                                <li><strong>Transparency:</strong> Decision-making processes and performance data must be accessible to relevant stakeholders</li>
+                                <li><strong>Fairness:</strong> Accountability measures must be applied consistently and impartially</li>
+                                <li><strong>Proportionality:</strong> Responses to performance issues must be appropriate to the circumstances</li>
+                                <li><strong>Continuous Improvement:</strong> The system must evolve based on feedback and changing organizational needs</li>
+                                <li><strong>Sustainability Focus:</strong> All accountability measures must support SSH's mission of sustainable development</li>
+                            </ul>
+                        </div>
+
+                        <!-- Index & Glossary SectionP -->
+                        <div class="index-glossary">
+                            <div class="index-box">
+                                <h3><i class="fas fa-list-ol"></i> Policy Areas Index</h3>
+                                <ul>
+                                    <li>Accountability Framework</li>
+                                    <li>Performance Metrics</li>
+                                    <li>Reporting Requirements</li>
+                                    <li>Review Procedures</li>
+                                    <li>Corrective Actions</li>
+                                    <li>Recognition Systems</li>
+                                    <li>Compliance Monitoring</li>
+                                    <li>Sustainability Indicators</li>
+                                    <li>Stakeholder Engagement</li>
+                                </ul>
+                            </div>
+                            <div class="glossary-box">
+                                <h3><i class="fas fa-bookmark"></i> Key Terms Glossary</h3>
+                                <ul>
+                                    <li><strong>Accountability:</strong> The obligation to demonstrate and take responsibility for performance</li>
+                                    <strong>Sustainability:</strong> Meeting present needs without compromising future generations</li>
+                                    <li><strong>Performance Indicator:</strong> A measurable value that demonstrates effectiveness</li>
+                                    <li><strong>Stakeholder:</strong> Any individual or group affected by SSH activities</li>
+                                    <li><strong>Corrective Action:</strong> Steps taken to rectify performance deficiencies</li>
+                                    <li><strong>Compliance:</strong> Adherence to laws, regulations, and internal policies</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Index Content -->
+            <div id="index-content" class="content-section">
+                <div class="index-container">
+                    <div class="index-header-section">
+                        <h1><i class="fas fa-search"></i> Search by Policy Title</h1>
+                        <div class="index-subtitle">Browse and filter SSH policies by title, area, chapter, and more</div>
+                    </div>
+                    
+                    <div class="index-search-section">
+                        <div class="index-search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="policySearch" placeholder="Type to search policies...">
+                        </div>
+                        
+                        <div class="alphabet-nav" id="alphabetNav">
+                            <!-- Alphabet letters will be added by JavaScript -->
+                        </div>
+                        
+                        <!-- File Upload Section (Admin Only) -->
+                        <div class="file-upload-section" id="fileUploadSection">
+                            <div class="admin-only-label">ADMIN ONLY</div>
+                            <h3><i class="fas fa-cloud-upload-alt"></i> Upload Policy Documents</h3>
+                            <p style="margin-bottom: 20px; color: #555;">Upload Word (.docx) or PDF (.pdf) files to add new policies to the index. <strong>Admin access required.</strong></p>
+                            
+                            <div class="upload-area" id="uploadArea">
+                                <i class="fas fa-file-upload"></i>
+                                <div class="upload-text">Drag & drop files here or click to browse</div>
+                                <div class="upload-subtext">Supports .docx and .pdf files up to 10MB</div>
+                            </div>
+                            
+                            <button class="upload-btn" id="uploadBtn" disabled>
+                                <i class="fas fa-upload"></i> Upload Selected Files
+                            </button>
+                            
+                            <input type="file" id="fileInput" multiple accept=".docx,.pdf" style="display: none;">
+                            
+                            <div class="uploaded-files" id="uploadedFiles">
+                                <h4><i class="fas fa-file-alt"></i> Recently Uploaded Files</h4>
+                                <ul class="file-list" id="fileList">
+                                    <!-- Uploaded files will appear here -->
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="policy-filters">
+                            <div class="filter-group">
+                                <label class="filter-label">POLICY AREA</label>
+                                <select class="filter-select" id="policyArea">
+                                    <option value="">All Areas</option>
+                                    <option value="livelihood">Livelihood</option>
+                                    <option value="water">Water</option>
+                                    <option value="education">Education</option>
+                                    <option value="power">Power</option>
+                                    <option value="health">Health</option>
+                                    <option value="environment">Environment</option>
+                                    <option value="admin">Administration</option>
+                                </select>
+                            </div>
+                            
+                            <div class="filter-group">
+                                <label class="filter-label">POLICY CHAPTER</label>
+                                <select class="filter-select" id="policyChapter">
+                                    <option value="">All Chapters</option>
+                                    <option value="1">Chapter 1: General Policies</option>
+                                    <option value="2">Chapter 2: Operational Policies</option>
+                                    <option value="3">Chapter 3: Program Policies</option>
+                                    <option value="4">Chapter 4: Compliance Policies</option>
+                                </select>
+                            </div>
+                            
+                            <div class="filter-group">
+                                <label class="filter-label">POLICY SUB-CHAPTER</label>
+                                <select class="filter-select" id="policySubChapter">
+                                    <option value="">All Sub-Chapters</option>
+                                    <option value="a">Sub-Chapter A: Procedures</option>
+                                    <option value="b">Sub-Chapter B: Guidelines</option>
+                                    <option value="c">Sub-Chapter C: Standards</option>
+                                </select>
+                            </div>
+                            
+                            <div class="filter-group">
+                                <label class="filter-label">POLICY PAGE</label>
+                                <select class="filter-select" id="policyPage">
+                                    <option value="">All Pages</option>
+                                    <option value="1">Page 1</option>
+                                    <option value="2">Page 2</option>
+                                    <option value="3">Page 3</option>
+                                    <option value="4">Page 4+</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="policy-list-container">
+                            <div class="policy-list" id="policyList">
+                                <!-- Policy list will be populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Other content sections would go here -->
+            <div id="accountability-content" class="content-section">
+                <div class="policy-container">
+                    <div class="policy-header">
+                        <h1>ACCOUNTABILITY</h1>
+                        <div class="policy-code">Overview of SSH Accountability Framework</div>
+                    </div>
+                    <div class="policy-content">
+                        <div class="sectionP">
+                            <h2>Accountability Framework</h2>
+                            <p>This section contains the accountability framework for Sudan Sustainability Hub.</p>
+                            <p>Click the Index navigation item to return to the policy index.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="policies-content" class="content-section">
+                <div class="policy-container">
+                    <div class="policy-header">
+                        <h1>POLICIES & PROCEDURES</h1>
+                        <div class="policy-code">Complete listing of SSH policies and procedures</div>
+                    </div>
+                    <div class="policy-content">
+                        <div class="sectionP">
+                            <h2>Policies and Procedures</h2>
+                            <p>This section contains all policies and procedures for Sudan Sustainability Hub.</p>
+                            <p>Click the Index navigation item to return to the policy index.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer">
+                <div class="footer-logo">SUDAN SUSTAINABILITY HUB</div>
+                <p>© 2023 Sudan Sustainability Hub. All rights reserved. | This document is classified as: INTERNAL USE</p>
+                <p>Last accessed: <span id="current-date"></span> | Active badges: <span id="badge-count">1</span></p>
+            </div>
+        </main>
+    </div>
+</div>
+    <script>
+        // Sample policy data for SSH with file information
+        const policies = [
+            { 
+                title: "Abandonment of Post", 
+                letter: "A", 
+                area: "admin", 
+                chapter: "2", 
+                subChapter: "a", 
+                page: "1",
+                fileType: "DOCX",
+                fileSize: "125.50 KB"
+            },
+            { 
+                title: "Accountability System Policy", 
+                letter: "A", 
+                area: "admin", 
+                chapter: "2", 
+                subChapter: "b", 
+                page: "3",
+                fileType: "DOCX",
+                fileSize: "717.05 KB"
+            },
+            { 
+                title: "Accounts Payable", 
+                letter: "A", 
+                area: "admin", 
+                chapter: "3", 
+                subChapter: "c", 
+                page: "2",
+                fileType: "PDF",
+                fileSize: "342.80 KB"
+            },
+            { 
+                title: "Budget Approval Process", 
+                letter: "B", 
+                area: "admin", 
+                chapter: "3", 
+                subChapter: "a", 
+                page: "1",
+                fileType: "DOCX",
+                fileSize: "89.30 KB"
+            },
+            { 
+                title: "Code of Conduct", 
+                letter: "C", 
+                area: "admin", 
+                chapter: "1", 
+                subChapter: "a", 
+                page: "1",
+                fileType: "PDF",
+                fileSize: "256.45 KB"
+            },
+            { 
+                title: "Data Protection Policy", 
+                letter: "D", 
+                area: "admin", 
+                chapter: "4", 
+                subChapter: "b", 
+                page: "3",
+                fileType: "DOCX",
+                fileSize: "512.20 KB"
+            }
+        ];
+        
+        // Store for uploaded files
+        let uploadedFiles = [];
+        
+        // Current user state
+        let currentUser = null;
+        
+        // Demo user credentials (only admin has upload access)
+        const demoUsers = {
+            'admin': { password: 'admin123', name: 'System Administrator', role: 'admin' },
+            'editor': { password: 'editor123', name: 'Policy Editor', role: 'editor' },
+            'viewer': { password: 'viewer123', name: 'Policy Viewer', role: 'viewer' }
+        };
+        
+        // Set current date in footer
+        const now = new Date();
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('current-date').textContent = now.toLocaleDateString('en-US', options);
+        
+        // Initialize variables
+        let currentActiveNav = document.querySelector('.nav-link.active');
+        let indexBadge = document.querySelector('#index-nav-item .nav-badge');
+        let currentPage = 'home';
+        
+        // Show login modal
+        document.getElementById('showLogin').addEventListener('click', function() {
+            document.getElementById('loginModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        // Close login modal
+        document.getElementById('closeLogin').addEventListener('click', function() {
+            document.getElementById('loginModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+        
+        // Handle login form submission
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const role = document.getElementById('role').value;
+            
+            // Validate credentials
+            if (demoUsers[username] && demoUsers[username].password === password) {
+                // Login successful
+                currentUser = {
+                    username: username,
+                    name: demoUsers[username].name,
+                    role: demoUsers[username].role
+                };
+                
+                // Update UI for logged in user
+                updateUIForUser(currentUser);
+                
+                // Close login modal
+                document.getElementById('loginModal').classList.remove('active');
+                document.body.style.overflow = 'auto';
+                
+                // Show success message
+                alert(`Login successful! Welcome ${currentUser.name}.`);
+                
+                // Reset form
+                document.getElementById('loginForm').reset();
+            } else {
+                alert('Invalid username or password. Please try again.\n\nDemo credentials:\n- admin / admin123\n- editor / editor123\n- viewer / viewer123');
+            }
+        });
+        
+        // Logout functionality
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+            if (confirm('Are you sure you want to logout?')) {
+                currentUser = null;
+                document.getElementById('adminControls').classList.remove('active');
+                document.getElementById('uploadBtn').disabled = true;
+                document.getElementById('fileUploadSection').classList.remove('active');
+                
+                // Show login button again
+                document.getElementById('showLogin').style.display = 'flex';
+                
+                alert('You have been logged out successfully.');
+            }
+        });
+        
+        // Update UI based on user role
+        function updateUIForUser(user) {
+            // Show admin controls
+            document.getElementById('adminControls').classList.add('active');
+            
+            // Update user info
+            document.getElementById('adminAvatar').textContent = user.name.charAt(0);
+            document.getElementById('adminName').textContent = user.name;
+            document.getElementById('adminRole').textContent = user.role.charAt(0).toUpperCase() + user.role.slice(1);
+            
+            // Update permission badge
+            const badge = document.getElementById('permissionBadge');
+            
+            if (user.role === 'admin') {
+                badge.textContent = 'UPLOAD ACCESS';
+                badge.style.backgroundColor = '#9b59b6';
+                
+                // Show file upload section
+                document.getElementById('fileUploadSection').classList.add('active');
+                document.getElementById('uploadBtn').disabled = false;
+            } else {
+                badge.textContent = 'VIEW ONLY';
+                badge.style.backgroundColor = '#f39c12';
+                
+                // Hide file upload section for non-admins
+                document.getElementById('fileUploadSection').classList.remove('active');
+            }
+            
+            // Hide login button
+            document.getElementById('showLogin').style.display = 'none';
+        }
+        
+        // Generate alphabet navigation
+        function generateAlphabetNav() {
+            const alphabetNav = document.getElementById('alphabetNav');
+            alphabetNav.innerHTML = '';
+            
+            // Create A-Z buttons
+            for (let i = 65; i <= 90; i++) {
+                const letter = String.fromCharCode(i);
+                const letterButton = document.createElement('div');
+                letterButton.className = 'alphabet-letter';
+                letterButton.textContent = letter;
+                letterButton.dataset.letter = letter;
+                
+                letterButton.addEventListener('click', function() {
+                    // Remove active class from all letters
+                    document.querySelectorAll('.alphabet-letter').forEach(l => l.classList.remove('active'));
+                    // Add active class to clicked letter
+                    this.classList.add('active');
+                    // Filter policies by letter
+                    filterPolicies();
+                });
+                
+                alphabetNav.appendChild(letterButton);
+            }
+        }
+        
+        // Format file size
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+        
+        // Filter and display policies
+        function filterPolicies() {
+            const searchTerm = document.getElementById('policySearch').value.toLowerCase();
+            const selectedArea = document.getElementById('policyArea').value;
+            const selectedChapter = document.getElementById('policyChapter').value;
+            const selectedSubChapter = document.getElementById('policySubChapter').value;
+            const selectedPage = document.getElementById('policyPage').value;
+            const selectedLetter = document.querySelector('.alphabet-letter.active')?.dataset.letter;
+            
+            // Filter policies
+            const filteredPolicies = policies.filter(policy => {
+                // Search term filter
+                if (searchTerm && !policy.title.toLowerCase().includes(searchTerm)) return false;
+                
+                // Letter filter
+                if (selectedLetter && policy.letter !== selectedLetter) return false;
+                
+                // Area filter
+                if (selectedArea && policy.area !== selectedArea) return false;
+                
+                // Chapter filter
+                if (selectedChapter && policy.chapter !== selectedChapter) return false;
+                
+                // Sub-chapter filter
+                if (selectedSubChapter && policy.subChapter !== selectedSubChapter) return false;
+                
+                // Page filter
+                if (selectedPage && policy.page !== selectedPage) return false;
+                
+                return true;
+            });
+            
+            // Group by letter
+            const groupedPolicies = {};
+            filteredPolicies.forEach(policy => {
+                if (!groupedPolicies[policy.letter]) {
+                    groupedPolicies[policy.letter] = [];
+                }
+                groupedPolicies[policy.letter].push(policy);
+            });
+            
+            // Display policies
+            const policyList = document.getElementById('policyList');
+            policyList.innerHTML = '';
+            
+            if (filteredPolicies.length === 0) {
+                policyList.innerHTML = '<p style="text-align: center; color: #7f8c8d; padding: 20px;">No policies found matching your criteria.</p>';
+                return;
+            }
+            
+            // Sort letters
+            const sortedLetters = Object.keys(groupedPolicies).sort();
+            
+            sortedLetters.forEach(letter => {
+                const letterGroup = document.createElement('div');
+                letterGroup.className = 'policy-letter-group';
+                
+                const letterHeader = document.createElement('div');
+                letterHeader.className = 'policy-letter';
+                letterHeader.innerHTML = `<i class="fas fa-font"></i> ${letter}`;
+                
+                letterGroup.appendChild(letterHeader);
+                
+                groupedPolicies[letter].forEach(policy => {
+                    const policyItem = document.createElement('div');
+                    policyItem.className = 'policy-item';
+                    
+                    const areaLabels = {
+                        'admin': 'Administration',
+                        'livelihood': 'Livelihood',
+                        'water': 'Water',
+                        'education': 'Education',
+                        'power': 'Power',
+                        'health': 'Health',
+                        'environment': 'Environment'
+                    };
+                    
+                    const fileIcon = policy.fileType === 'PDF' ? 'fas fa-file-pdf' : 'fas fa-file-word';
+                    const fileColor = policy.fileType === 'PDF' ? '#e74c3c' : '#2c5aa0';
+                    
+                    // ALWAYS show download button (no permissions required)
+                    const downloadBtnHtml = `
+                        <button class="policy-download-btn" data-policy="${policy.title}">
+                            <i class="fas fa-download"></i> DOWNLOAD
+                        </button>`;
+                    
+                    policyItem.innerHTML = `
+                        <div class="policy-item-title">${policy.title}</div>
+                        <div class="policy-item-meta">
+                            <span class="policy-item-area">${areaLabels[policy.area] || policy.area}</span>
+                            <div class="policy-file-info">
+                                <div class="policy-file-type">
+                                    <i class="${fileIcon}" style="color: ${fileColor};"></i> ${policy.fileType} (${policy.fileSize})
+                                </div>
+                                ${downloadBtnHtml}
+                            </div>
+                        </div>
+                    `;
+                    
+                    // Add download functionality (available to everyone)
+                    const downloadBtn = policyItem.querySelector('.policy-download-btn');
+                    downloadBtn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        downloadPolicy(policy);
+                    });
+                    
+                    // Add click to view policy
+                    policyItem.addEventListener('click', function() {
+                        viewPolicy(policy);
+                    });
+                    
+                    letterGroup.appendChild(policyItem);
+                });
+                
+                policyList.appendChild(letterGroup);
+            });
+        }
+        
+        // Download policy file (available to everyone)
+        function downloadPolicy(policy) {
+            // In a real application, this would initiate a file download
+            // For this demo, we'll show a confirmation message
+            const fileExt = policy.fileType.toLowerCase();
+            const fileName = `${policy.title.replace(/\s+/g, '_')}.${fileExt}`;
+            
+            alert(`Downloading: ${fileName}\n\nFile: ${policy.fileType} (${policy.fileSize})\n\nIn a real implementation, this would download the file.`);
+            
+            // Add to recent downloads (for demo purposes)
+            addToUploadedFiles({
+                name: fileName,
+                size: policy.fileSize,
+                type: policy.fileType,
+                action: 'downloaded'
+            });
+        }
+        
+        // View policy
+        function viewPolicy(policy) {
+            alert(`Opening policy: ${policy.title}\n\nFile: ${policy.fileType} (${policy.fileSize})\nArea: ${policy.area}\nChapter: ${policy.chapter}\n\nIn a real implementation, this would open the policy document in a viewer.`);
+        }
+        
+        // Initialize index page
+        function initIndexPage() {
+            generateAlphabetNav();
+            filterPolicies();
+            renderUploadedFiles();
+            
+            // Add event listeners for filters
+            document.getElementById('policySearch').addEventListener('input', filterPolicies);
+            document.getElementById('policyArea').addEventListener('change', filterPolicies);
+            document.getElementById('policyChapter').addEventListener('change', filterPolicies);
+            document.getElementById('policySubChapter').addEventListener('change', filterPolicies);
+            document.getElementById('policyPage').addEventListener('change', filterPolicies);
+            
+            // Initialize file upload functionality (only for admins)
+            initFileUpload();
+        }
+        
+        // Initialize file upload
+        function initFileUpload() {
+            const uploadArea = document.getElementById('uploadArea');
+            const fileInput = document.getElementById('fileInput');
+            const uploadBtn = document.getElementById('uploadBtn');
+            
+            // Click on upload area to trigger file input
+            uploadArea.addEventListener('click', function() {
+                if (!currentUser || currentUser.role !== 'admin') {
+                    alert('You need to login as an administrator to upload files.');
+                    document.getElementById('showLogin').click();
+                    return;
+                }
+                fileInput.click();
+            });
+            
+            // Handle file selection
+            fileInput.addEventListener('change', function(e) {
+                if (!currentUser || currentUser.role !== 'admin') {
+                    alert('You need administrator privileges to upload files.');
+                    return;
+                }
+                
+                const files = Array.from(e.target.files);
+                if (files.length > 0) {
+                    // Show file names in upload area
+                    const fileNames = files.map(f => f.name).join(', ');
+                    uploadArea.innerHTML = `
+                        <i class="fas fa-file-check"></i>
+                        <div class="upload-text">${files.length} file(s) selected</div>
+                        <div class="upload-subtext">${fileNames}</div>
+                    `;
+                    uploadArea.style.borderColor = '#2ecc71';
+                    uploadArea.style.backgroundColor = '#f8fff8';
+                }
+            });
+            
+            // Handle upload button click
+            uploadBtn.addEventListener('click', function() {
+                if (!currentUser || currentUser.role !== 'admin') {
+                    alert('You need administrator privileges to upload files.');
+                    return;
+                }
+                
+                const files = fileInput.files;
+                if (files.length === 0) {
+                    alert('Please select files to upload first.');
+                    return;
+                }
+                
+                // Process each file
+                Array.from(files).forEach(file => {
+                    // Check file type
+                    const fileType = file.name.endsWith('.pdf') ? 'PDF' : 
+                                   file.name.endsWith('.docx') ? 'DOCX' : 'Unknown';
+                    
+                    if (fileType === 'Unknown') {
+                        alert(`File "${file.name}" is not a supported format. Please upload .docx or .pdf files.`);
+                        return;
+                    }
+                    
+                    // Check file size (10MB limit)
+                    if (file.size > 10 * 1024 * 1024) {
+                        alert(`File "${file.name}" is too large. Maximum file size is 10MB.`);
+                        return;
+                    }
+                    
+                    // Extract policy title from filename (remove extension)
+                    const policyTitle = file.name.replace(/\.[^/.]+$/, "").replace(/_/g, " ");
+                    
+                    // Add to uploaded files
+                    const newFile = {
+                        name: file.name,
+                        size: formatFileSize(file.size),
+                        type: fileType,
+                        date: new Date().toLocaleDateString(),
+                        id: Date.now() + Math.random(),
+                        uploadedBy: currentUser.name,
+                        action: 'uploaded'
+                    };
+                    
+                    uploadedFiles.unshift(newFile); // Add to beginning
+                    
+                    // Also add to policies list for demo purposes
+                    const firstLetter = policyTitle.charAt(0).toUpperCase();
+                    policies.push({
+                        title: policyTitle,
+                        letter: firstLetter,
+                        area: "admin",
+                        chapter: "4",
+                        subChapter: "a",
+                        page: "1",
+                        fileType: fileType,
+                        fileSize: formatFileSize(file.size)
+                    });
+                });
+                
+                // Reset file input
+                fileInput.value = '';
+                uploadArea.innerHTML = `
+                    <i class="fas fa-file-upload"></i>
+                    <div class="upload-text">Drag & drop files here or click to browse</div>
+                    <div class="upload-subtext">Supports .docx and .pdf files up to 10MB</div>
+                `;
+                uploadArea.style.borderColor = '#0a4d0a';
+                uploadArea.style.backgroundColor = 'white';
+                
+                // Update displayed files and policies
+                renderUploadedFiles();
+                filterPolicies();
+                
+                // Show success message
+                alert(`Successfully uploaded ${files.length} file(s). They are now available in the "Recently Uploaded Files" section and policy list.`);
+            });
+            
+            // Drag and drop functionality
+            uploadArea.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                uploadArea.style.borderColor = '#1e7e1e';
+                uploadArea.style.backgroundColor = '#f8fff8';
+            });
+            
+            uploadArea.addEventListener('dragleave', function(e) {
+                e.preventDefault();
+                uploadArea.style.borderColor = '#0a4d0a';
+                uploadArea.style.backgroundColor = 'white';
+            });
+            
+            uploadArea.addEventListener('drop', function(e) {
+                e.preventDefault();
+                
+                if (!currentUser || currentUser.role !== 'admin') {
+                    alert('You need administrator privileges to upload files.');
+                    return;
+                }
+                
+                fileInput.files = e.dataTransfer.files;
+                
+                // Trigger change event
+                const event = new Event('change', { bubbles: true });
+                fileInput.dispatchEvent(event);
+                
+                uploadArea.style.borderColor = '#0a4d0a';
+                uploadArea.style.backgroundColor = 'white';
+            });
+        }
+        
+        // Render uploaded files
+        function renderUploadedFiles() {
+            const fileList = document.getElementById('fileList');
+            fileList.innerHTML = '';
+            
+            if (uploadedFiles.length === 0) {
+                fileList.innerHTML = '<p style="text-align: center; color: #7f8c8d; padding: 10px;">No files uploaded yet.</p>';
+                return;
+            }
+            
+            // Show only the 5 most recent files
+            const recentFiles = uploadedFiles.slice(0, 5);
+            
+            recentFiles.forEach(file => {
+                const fileItem = document.createElement('li');
+                fileItem.className = 'file-item';
+                
+                const fileIcon = file.type === 'PDF' ? 'fas fa-file-pdf' : 'fas fa-file-word';
+                const fileColor = file.type === 'PDF' ? '#e74c3c' : '#2c5aa0';
+                const actionText = file.action === 'uploaded' ? 'Uploaded by' : 'Downloaded by';
+                
+                fileItem.innerHTML = `
+                    <div class="file-info">
+                        <div class="file-icon">
+                            <i class="${fileIcon}" style="color: ${fileColor};"></i>
+                        </div>
+                        <div class="file-details">
+                            <h5>${file.name}</h5>
+                            <div class="file-size">${file.type} • ${file.size} • ${actionText} ${file.uploadedBy} on ${file.date}</div>
+                        </div>
+                    </div>
+                    <div class="file-actions">
+                        <button class="download-btn" data-id="${file.id}">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                    </div>
+                `;
+                
+                // Add download functionality (available to everyone)
+                const downloadBtn = fileItem.querySelector('.download-btn');
+                downloadBtn.addEventListener('click', function() {
+                    alert(`Downloading: ${file.name}\n\nIn a real implementation, this would download the file.`);
+                    
+                    // Add to recent downloads
+                    addToUploadedFiles({
+                        name: file.name,
+                        size: file.size,
+                        type: file.type,
+                        action: 'downloaded',
+                        uploadedBy: currentUser ? currentUser.name : 'Guest'
+                    });
+                });
+                
+                fileList.appendChild(fileItem);
+            });
+        }
+        
+        // Add to uploaded files (for demo)
+        function addToUploadedFiles(file) {
+            const newFile = {
+                name: file.name,
+                size: file.size,
+                type: file.type,
+                date: new Date().toLocaleDateString(),
+                id: Date.now() + Math.random(),
+                uploadedBy: file.uploadedBy || (currentUser ? currentUser.name : 'Guest'),
+                action: file.action || 'uploaded'
+            };
+            
+            uploadedFiles.unshift(newFile);
+            renderUploadedFiles();
+        }
+        
+        // Show page content
+        function showPage(pageId) {
+            // Hide all content sections
+            document.querySelectorAll('.content-section').forEach(sectionP => {
+                sectionP.classList.remove('active');
+            });
+            
+            // Show the selected content section
+            const contentSection = document.getElementById(`${pageId}-content`);
+            if (contentSection) {
+                contentSection.classList.add('active');
+            }
+            
+            // Update breadcrumb
+            updateBreadcrumb(pageId);
+            
+            // If showing index page, initialize it
+            if (pageId === 'index') {
+                initIndexPage();
+            }
+        }
+        
+        // Update breadcrumb
+        function updateBreadcrumb(pageId) {
+            const breadcrumb = document.getElementById('breadcrumb');
+            const pageNames = {
+                'home': 'HOME',
+                'index': 'POLICY INDEX',
+                'accountability': 'ACCOUNTABILITY',
+                'policies': 'POLICIES & PROCEDURES',
+                'policy-areas': 'POLICY AREAS',
+                'glossary': 'GLOSSARY'
+            };
+            
+            if (pageId === 'home') {
+                breadcrumb.innerHTML = '<a href="#" data-page="home">HOME</a> / <span>ACCOUNTABILITY SYSTEM POLICY</span>';
+            } else {
+                breadcrumb.innerHTML = `<a href="#" data-page="home">HOME</a> / <span>${pageNames[pageId] || pageId.toUpperCase()}</span>`;
+            }
+        }
+        
+        // Navigation click functionality with badges
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const pageId = this.dataset.page;
+                
+                // Check if this is the index link
+                if (pageId === 'index') {
+                    // Set index badge
+                    indexBadge.classList.add('index');
+                    indexBadge.textContent = 'Index';
+                    indexBadge.style.display = 'inline-block';
+                }
+                
+                // Remove active class from all nav items
+                document.querySelectorAll('.nav-link').forEach(item => {
+                    item.classList.remove('active');
+                    const itemBadge = item.querySelector('.nav-badge');
+                    if (itemBadge.classList.contains('active') && item !== this) {
+                        itemBadge.classList.remove('active');
+                        itemBadge.textContent = itemBadge.textContent === 'Active' ? '' : itemBadge.textContent;
+                    }
+                });
+                
+                // Add active class to clicked item
+                this.classList.add('active');
+                
+                // Set the badge for active page
+                const badge = this.querySelector('.nav-badge');
+                badge.classList.add('active');
+                badge.textContent = 'Active';
+                
+                // Show the corresponding page content
+                showPage(pageId);
+                
+                // Update current page
+                currentPage = pageId;
+                
+                // Update badge counter
+                updateBadgeCount();
+            });
+        });
+        
+        // Update badge counter
+        function updateBadgeCount() {
+            const activeBadges = document.querySelectorAll('.nav-badge:not(:empty)').length;
+            document.getElementById('badge-count').textContent = activeBadges;
+        }
+        
+        // Add badges to all items
+        document.getElementById('add-badges').addEventListener('click', function() {
+            document.querySelectorAll('.nav-badge').forEach((badge, index) => {
+                if (!badge.classList.contains('active') && !badge.classList.contains('index')) {
+                    badge.textContent = index + 1;
+                    badge.style.display = 'inline-block';
+                    badge.classList.remove('notification');
+                }
+            });
+            updateBadgeCount();
+        });
+        
+        // Clear all badges except active and index
+        document.getElementById('clear-badges').addEventListener('click', function() {
+            document.querySelectorAll('.nav-badge').forEach(badge => {
+                if (!badge.classList.contains('active') && !badge.classList.contains('index')) {
+                    badge.textContent = '';
+                    badge.style.display = 'none';
+                    badge.classList.remove('notification');
+                }
+            });
+            updateBadgeCount();
+        });
+        
+        // Add random notification badges
+        document.getElementById('random-badges').addEventListener('click', function() {
+            const notifications = ['New', 'Updated', '!', '3', '5+', 'Alert', 'Hot'];
+            document.querySelectorAll('.nav-badge').forEach(badge => {
+                if (!badge.classList.contains('active') && !badge.classList.contains('index') && Math.random() > 0.5) {
+                    const randomNotification = notifications[Math.floor(Math.random() * notifications.length)];
+                    badge.textContent = randomNotification;
+                    badge.style.display = 'inline-block';
+                    badge.classList.add('notification');
+                }
+            });
+            updateBadgeCount();
+        });
+        
+        // Open index from button
+        document.getElementById('open-index').addEventListener('click', function() {
+            // Simulate clicking the index nav item
+            document.querySelector('.nav-link[data-page="index"]').click();
+        });
+        
+        // Simple search functionality in header
+        document.querySelector('.search-box input').addEventListener('keyup', function(e) {
+            if (e.key === 'Enter') {
+                const searchTerm = this.value.trim();
+                if (searchTerm) {
+                    // Navigate to index and search
+                    document.querySelector('.nav-link[data-page="index"]').click();
+                    setTimeout(() => {
+                        document.getElementById('policySearch').value = searchTerm;
+                        document.getElementById('policySearch').focus();
+                        filterPolicies();
+                    }, 100);
+                }
+            }
+        });
+        
+        // Donate button functionality
+        document.querySelector('.donate-btn').addEventListener('click', function() {
+            alert('Thank you for your interest in supporting Sudan Sustainability Hub!\n\nIn a real implementation, this would redirect to a donation page.');
+        });
+        
+        // Top navigation functionality
+        document.querySelectorAll('.nav-item-top').forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                const area = this.textContent;
+                alert(`Navigating to SSH ${area} sectionP\n\nIn a real implementation, this would show content related to ${area}.`);
+            });
+        });
+        
+        // Breadcrumb navigation
+        document.querySelectorAll('.breadcrumb a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const pageId = this.dataset.page;
+                if (pageId) {
+                    // Find and click the corresponding nav link
+                    const navLink = document.querySelector(`.nav-link[data-page="${pageId}"]`);
+                    if (navLink) {
+                        navLink.click();
+                    }
+                }
+            });
+        });
+        
+        // Close modal when clicking outside
+        document.getElementById('loginModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                document.getElementById('closeLogin').click();
+            }
+        });
+        
+        // Initialize badge count
+        updateBadgeCount();
+    </script>
+</body>
+</html>

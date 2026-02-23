@@ -1,0 +1,232 @@
+/* ============================================================
+   CONSOLIDATED RESPONSIVE STYLES FOR HERO SLIDER (ID: displayJS)
+   Sudan Sustainability Hub
+   ============================================================ */
+
+/* --- TABLET DEVIECES (768px - 1024px) --- */
+@media screen and (max-width: 1024px) {
+    .container-set {
+        height: auto;
+        min-height: 100vh !important;
+        overflow-y: auto;
+        text-align: center !important;
+        align-items: center !important;
+    }
+    .progress-bar {
+        display: none;
+        position: absolute;
+        bottom: 322px !important;
+        left: 0 !important;
+        height: 2px !important;
+        background:red !important;
+        z-index: 25 !important;
+        transform-origin: left !important;
+        transition: none !important;
+        height: 10px;
+        background: #eee;
+        border-radius: 5px;
+        margin: 0 !important;
+        overflow: hidden;
+}
+    h1#heroTitle {
+        font-size: clamp(2rem, 4.5vw, 3rem) !important;
+        line-height: 1.2 !important;
+        margin-bottom: 1.5rem !important;
+    }
+
+    .hero-buttons {
+        gap: 1rem !important;
+        margin-bottom: 2rem !important;
+    }
+
+    .stat-item {
+        padding: 1rem 1.5rem 1rem 0 !important;
+        margin-right: 1.5rem !important;
+    }
+
+    .stat-number {
+        font-size: 2.2rem !important;
+    }
+
+    .slide-index {
+        right: 3vw !important;
+        scale: 0.9;
+    }
+
+    .controls {
+        right: 3vw !important;
+        bottom: 1.5rem !important;
+    }
+}
+
+/* --- MOBILE DEVICES (max-width: 767px) --- */
+@media screen and (max-width: 767px) {
+    body {
+        overflow: visible !important;
+        height: auto !important;
+    }
+
+    .container-set {
+        width: 99.8% !important;
+        height: 43vh !important;
+        min-height: 40vh !important;
+        overflow: visible !important;
+        /* display: inline !important; */
+    }
+
+    .hero .container {
+        padding:0 !important;
+    }
+
+    h1#heroTitle {
+        font-size: 1.8rem !important;
+        line-height: 1.3 !important;
+        margin-bottom: 2rem !important;
+        max-width: 100% !important;
+                display: none !important;
+    }
+     .mobile-menu-overlay{
+        width: 95%;
+    }
+    .hero-buttons {
+        flex-direction: column !important;
+        width: 100% !important;
+        max-width: 350px !important;
+        margin: 0 !important;
+        gap: 0.4rem !important;
+        position: relative;
+        bottom: 164px;
+
+    }
+
+    .btn {
+        width: 100% !important;
+        justify-content: center !important;
+        padding: 0.8rem 1.2rem !important;
+        font-size: 0.75rem !important;
+    }
+
+    .stats {
+        display: none !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 1.5rem 1rem !important;
+        width: 100% !important;
+        margin-top: -33rem !important;
+    }
+
+    .stat-item {
+        margin-right: 0 !important;
+        padding: 0.8rem 0 !important;
+        border-top: 1px solid rgba(255,255,255,0.1) !important;
+        border-right: none !important;
+        text-align: left !important;
+    }
+
+    .stat-number {
+        font-size: 1.6rem !important;
+    }
+
+    .stat-text {
+        font-size: 0.65rem !important;
+    }
+
+    /* Slider specific adjustments */
+    .slide-content {
+        padding: 2rem 5vw 5rem !important;
+        background: linear-gradient(to top, rgba(10,25,22,0.95) 20%, transparent 100%) !important;
+    }
+
+    .slide-title {
+        font-size: 2.2rem !important;
+        margin-bottom: 0.5rem !important;
+    }
+
+    .slide-desc {
+        font-size: 0.85rem !important;
+        max-width: 100% !important;
+    }
+
+    .slide-index {
+        display: none !important; /* Hide vertical indicator on mobile for space */
+    }
+
+    .dots-container {
+        bottom: .1rem !important;
+        display: none !important;
+    }
+    .gallery-cell .set-CONTOS {
+        display:inline-block !important;
+        bottom: 3rem !important;
+        right: 50% !important;
+        transform: translateX(50%) !important;
+        width: 99% !important;
+        justify-content: space-between !important;
+        text-align: center !important;
+        position: relative !important;
+        padding: 5px !important;
+    }
+
+    .controls {
+        display:inline-block !important;
+        bottom: 3rem !important;
+        right: 50% !important;
+        transform: translateX(50%) !important;
+        width: 99% !important;
+        justify-content: space-between !important;
+        text-align: center !important;
+        position: relative !important;
+        padding: 5px !important;
+    }
+
+    .control-btn, .control-btn-play {
+        width: 30px !important;
+        height: 30px !important;
+    }
+    .control-btn svg {
+    width: 10px !important;
+    height: 16px !important;
+    fill: #fff;
+}
+    .slide-counter {
+        order: -1; /* Move counter to left in flex layout */
+        min-width: 40px !important;
+        display: inline !important;
+    }
+    .slide-index {
+    position: absolute;
+    top: 16% !important;
+    right: 5vw;
+    transform: translateY(-50%);
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .5rem;
+}
+
+/* --- SMALL MOBILE (max-width: 480px) --- */
+@media screen and (max-width: 480px) {
+    h1#heroTitle {
+        font-size: 1.6rem !important;
+        display: none !important;
+    }
+
+    .stats {
+        grid-template-columns: 1fr !important; /* Stack stats completely on very small screens */
+        gap: 0.5rem !important;
+    }
+
+    .stat-item {
+        padding: 0.5rem 0 !important;
+    }
+
+    .slide-title {
+        font-size: 1.8rem !important;
+    }
+    .mobile-menu-overlay{
+        width: 94%;
+    }
+    .control-btn-play {
+        scale: 0.9;
+    }
+}

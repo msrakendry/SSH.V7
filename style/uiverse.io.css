@@ -1,0 +1,335 @@
+/* From Uiverse.io by SteveBloX */
+/* end 4 cards */
+
+/* end 4 cards */
+/* social media ///// From Uiverse.io by Praashoo7 */ 
+/* From Uiverse.io by Praashoo7 */ 
+.main_back {
+ position: absolute;
+    border-radius: 4px;
+    width: 16.2em;
+    height: 3.5em;
+    background: linear-gradient(270deg, #03a9f4, #cc39a4, #ffb5d2);
+    box-shadow: inset 0px 0px 180px 5px #ffffff;
+}
+
+.main {
+  
+  display: flex;
+    /* flex-wrap: wrap; */
+    width: 16em;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.cardF {
+
+      display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    /* border-top-left-radius: 10px; */
+    background: lightgrey;
+    transition: 0.4s ease-in-out, 0.2s background-color ease-in-out, 0.2s background-image ease-in-out;
+    background: rgba(255, 255, 255, 0.596);
+    backdrop-filter: blur(5px);
+    border: 1px solid transparent;
+    -webkit-backdrop-filter: blur(5px);
+}
+
+.cardF .instagram {
+  opacity: 1;
+  transition: 0.2s ease-in-out;
+  fill: #cc39a4;
+}
+
+.cardF:nth-child(2) {
+  border-radius: 0px;
+}
+
+.cardF:nth-child(2) .x {
+  opacity: 1;
+  transition: 0.2s ease-in-out;
+  fill: #03a9f4;
+}
+
+.cardF:nth-child(1) {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+.cardF:nth-child(5) {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+.cardF:nth-child(3) .facebook {
+  opacity: 1;
+  transition: 0.2s ease-in-out;
+  fill: #3f1ff3;
+}
+
+.cardF:nth-child(4) {
+  border-radius: 0px;
+}
+
+.cardF:nth-child(4) .linkedin {
+  opacity: 1;
+  transition: 0.2s ease-in-out;
+}
+.cardF:nth-child(4):hover a .linkedin > path:nth-of-type(1) {
+    fill: white !important;
+}
+
+.cardF:nth-child(5) .uiverse {
+  position: absolute;
+  margin-left: 0.2em;
+  margin-top: 0.2em;
+  opacity: 1;
+  transition: 0.2s ease-in-out;
+}
+
+.main:hover {
+  width: 16em;
+  cursor: pointer;
+}
+
+.main:hover .main_back {
+  opacity: 0;
+}
+
+.main:hover .cardF {
+  display: grid;
+    vertical-align: top;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+  margin:0 0.2em;
+  border-radius: 10px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.2);
+  z-index: 1;
+}
+
+.main:hover .cardF:nth-child(5) {
+  border: transparent;
+}
+
+.main:hover .text {
+  opacity: 0;
+  z-index: -3;
+}
+
+.main:hover .instagram {
+  opacity: 1;
+}
+
+.main:hover .x {
+  opacity: 1;
+}
+
+.main:hover .facebook {
+  opacity: 1;
+}
+
+.main:hover .linkedin {
+  opacity: 1;
+}
+
+.main:hover .reddit {
+    transition: 0.2s ease-in-out;
+
+  opacity: 1;
+}
+.cardF:nth-child(5):hover {
+  background-color: rgb(255, 69, 0);
+}
+
+.cardF:nth-child(5) .reddit > g circle {
+  fill: rgb(255, 69, 0);
+}
+
+.cardF:nth-child(5) .reddit > g path {
+  fill: white;
+}
+
+
+.cardF:nth-child(1):hover {
+  background-color: #f00ab1;
+}
+
+.cardF:nth-child(1):hover .instagram {
+  fill: white;
+}
+
+.cardF:nth-child(2):hover {
+ background-color: #0b212c;
+}
+:is(.cardF ):hover a svg {
+  fill: rgb(244, 245, 246);
+}
+
+
+.cardF:nth-child(3):hover {
+  background-color: #232eec;
+}
+
+.cardF:nth-child(3):hover .facebook {
+  fill: white;
+}
+
+.cardF:nth-child(4):hover {
+  background-color: #4112c2;
+}
+.cardF:nth-child(5):hover .uiverse #paint0_linear_501_142 stop {
+  stop-color: white;
+}
+
+.cardF:nth-child(5):hover .uiverse #paint1_linear_501_142 stop {
+  stop-color: white;
+}
+
+.cardF:nth-child(5):hover .uiverse #paint2_linear_501_142 stop {
+  stop-color: white;
+}
+
+@keyframes backgroundIMG {
+  100% {
+    background-image: linear-gradient(#bf66ff, #6248ff, #00ddeb);
+  }
+}
+
+
+.text {
+position: absolute;
+    font-size: 0.7em;
+    transition: 0.4s ease-in-out;
+    color: black;
+    text-align: center;
+    font-weight: bold;
+    letter-spacing: 0.1em;
+    margin: 0;
+    padding: 0;
+    z-index: 3;
+}
+/* BUTOONS STYLING */
+/* From Uiverse.io by adamgiebl */ 
+/* From Uiverse.io by doniaskima */ 
+.btn-23,
+.btn-23 *,
+.btn-23 :after,
+.btn-23 :before,
+.btn-23:after,
+.btn-23:before {
+  border: 0 solid;
+  box-sizing: border-box;
+}
+:is(.pillar-card ) a.set-btn-water .btn-23{
+    background-color: var(--water);
+}
+:is(.pillar-card ) a.btn-livelihood{
+    background-color: var(--livelihood);
+}
+:is(.pillar-card ) a.btn-energy{
+    background-color: var(--energy);
+}
+:is(.pillar-card ) a.education{
+    background-color: var(--education);
+}
+/* four botons tyle */
+.btn-23 {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-appearance: button;
+  background-image: none;
+  color: #fff;
+  cursor: pointer;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+  font-size: 100%;
+  font-weight: 900;
+  line-height: 1.5;
+  margin: 0;
+  -webkit-mask-image: -webkit-radial-gradient(#000, #fff);
+  padding: 0;
+  text-transform: uppercase;
+}
+
+.btn-23:disabled {
+  cursor: default;
+}
+
+.btn-23:-moz-focusring {
+  outline: auto;
+}
+
+.btn-23 svg {
+  display: block;
+  vertical-align: middle;
+}
+
+.btn-23 [hidden] {
+  display: none;
+}
+
+.btn-23 {
+  border-radius: 99rem;
+  border-width: 2px;
+  overflow: hidden;
+  padding: 0.8rem 3rem;
+  position: relative;
+  margin-top: 20px;
+}
+
+.btn-23 span {
+  display: grid;
+  inset: 0;
+  place-items: center;
+  position: absolute;
+  transition: opacity 0.2s ease;
+}
+
+.btn-23 .marquee {
+  --spacing: 7em;
+  --start: 0em;
+  --end: 7em;
+  -webkit-animation: marquee 1s linear infinite;
+  animation: marquee 1s linear infinite;
+  -webkit-animation-play-state: paused;
+  animation-play-state: paused;
+  opacity: 0;
+  position: relative;
+  text-shadow: #fff var(--spacing) 0, #fff calc(var(--spacing) * -1) 0,
+    #fff calc(var(--spacing) * -2) 0;
+}
+
+.btn-23:hover .marquee {
+  -webkit-animation-play-state: running;
+  animation-play-state: running;
+  opacity: 1;
+}
+
+.btn-23:hover .text {
+  opacity: 0;
+}
+
+@-webkit-keyframes marquee {
+  0% {
+    transform: translateX(var(--start));
+  }
+
+  to {
+    transform: translateX(var(--end));
+  }
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(var(--start));
+  }
+
+  to {
+    transform: translateX(var(--end));
+  }
+}

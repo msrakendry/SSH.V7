@@ -1,0 +1,87 @@
+
+    /* ============================= */
+    /* DARK MODE PALETTE */
+    /* ============================= */
+    
+    /* Dark Mode Specific Styles */
+
+    /*  
+    body.dark-mode {
+    --primary: #4cc9f0;
+    --secondary: #4895ef;
+    --accent: #f1c453;
+    --bg: #0b132b;
+    --card: #1c2541;
+    --text: #eaeaea;
+    --muted: #adb5bd;
+    }
+    
+     /* ============================= */
+    /* ROOT COLORS (LIGHT MODE) */
+    /* ============================= */
+    /*  
+    :root {
+    --primary: #0077b6;
+    --secondary: #2a9d8f;
+    --accent: #f4a261;
+    --bg: #ffffff;
+    --card: #ffffff;
+    --text: #1d3557;
+    --muted: #6c757d;
+    --radius: 14px;
+    }
+
+    /* ============================= */
+    /* DARK MODE PALETTE */
+    /* ============================= */
+    /*
+    body.dark-mode {
+    --primary: #4cc9f0;
+    --secondary: #4895ef;
+    --accent: #f1c453;
+    --bg: #0b132b;
+    --card: #1c2541;
+    --text: #eaeaea;
+    --muted: #adb5bd;
+    }
+     body.dark-mode {
+        --light: #0d1b2a;
+        --dark: #f1faee;
+        background: #0d1b2a;
+        color: #f1faee;
+    }
+    body.dark-mode header,
+    body.dark-mode .hero,
+    body.dark-mode section,
+    body.dark-mode .pillar-card,
+    body.dark-mode .program-card,
+    body.dark-mode .campaign-card,
+    body.dark-mode .impact-item,
+    body.dark-mode .menubc,
+    body.dark-mode .feature-item,
+    body.dark-mode .financial-summary,
+    body.dark-mode .product-card,
+    body.dark-mode .faq-item,
+    body.dark-mode .impact-text,
+    body.dark-mode .blog-card {
+        background: #1b263b;
+        color: #f1faee;
+    }
+
+    body.dark-mode .hero {
+        background: linear-gradient(rgba(38, 52, 83, 0.80), rgba(80, 80, 81, 0.9)), url(images/hero2.avif);
+        background-size: cover;
+        background-position: center;
+        color: white;
+        padding: 150px 0;
+        text-align: center;   
+    }
+
+    body.dark-mode p,
+    body.dark-mode h1,
+    body.dark-mode h2,
+    body.dark-mode h3,
+    body.dark-mode h4 {
+        color: #f1faee;
+    }
+    /* END DARK MODE PALETTE */

@@ -1,0 +1,163 @@
+/* ===================================== */
+/* RESPONSIVE HEADER & MENU STYLES */
+/* ===================================== */
+
+/* Mobile Menu Styles */
+.mobile-menu-active {
+    display: flex !important;
+    flex-direction: column !important;
+    position: fixed !important;
+    top: 4rem;
+    left: 0;
+    right: 0;
+    background: linear-gradient(135deg, #0a4d0a 0%, #1e7e1e 100%);
+    max-height: calc(100vh - 4rem);
+    overflow-y: auto;
+    z-index: 999;
+    padding: 1rem;
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Prevent body scroll when menu is open */
+body.menu-open {
+    overflow: hidden;
+}
+
+/* Mega Menu Responsive Styles */
+@media (max-width: 1024px) {
+    .mega-menu {
+        position: static !important;
+        transform: none !important;
+        width: 100% !important;
+        box-shadow: none;
+        margin-top: 0.5rem;
+    }
+
+    .mega-menu::before {
+        display: none;
+    }
+
+    .mega-grid {
+        grid-template-columns: 1fr !important;
+        padding: 1rem;
+        gap: 1.5rem;
+    }
+
+    .work-grid,
+    .about-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1rem;
+    }
+
+    .bJNjrm {
+        width: 100%;
+    }
+
+    .gEHDuZ.mobile-menu-active .bJNjrm {
+        margin: 0.5rem 0;
+    }
+
+    /* Make dropdown buttons full width on mobile */
+    .dropdown-toggle {
+        width: 100%;
+        justify-content: space-between;
+        padding: 0.75rem 1rem;
+    }
+
+    /* Hide desktop navigation on mobile/tablet */
+    @media (max-width: 1024px) {
+        .gEHDuZ:not(.mobile-menu-active) {
+            display: none;
+        }
+    }
+}
+
+/* Tablet Menu Styles */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .kBSWBi {
+        padding: 0 1.5rem;
+    }
+
+    .mega-menu {
+        padding: 1.5rem;
+    }
+
+    .work-grid,
+    .about-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}
+
+/* Desktop Styles - Show/Hide Elements */
+@media (min-width: 1025px) {
+    .TabletMenu__Container-sc-ds1nxt-2 {
+        display: none;
+    }
+
+    .gEHDuZ {
+        display: flex !important;
+    }
+
+    /* Desktop hover effects for mega menu */
+    .bJNjrm:hover .mega-menu,
+    .bJNjrm.active .mega-menu {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+    }
+}
+
+/* Touch Device Specific Styles */
+body.touch-device button {
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Hamburger Menu Button Animation */
+#menu-trigger.active {
+    transform: rotate(90deg);
+    transition: transform 0.3s ease;
+}
+
+/* Smooth transitions for all interactive elements */
+.bJNjrm,
+.mega-menu,
+.dropdown-toggle {
+    transition: all 0.3s ease;
+}
+
+/* Accessibility improvements */
+.dropdown-toggle:focus,
+#menu-trigger:focus {
+    outline: 2px solid rgba(255, 255, 255, 0.5);
+    outline-offset: 2px;
+}
+
+/* Better mobile spacing */
+@media (max-width: 768px) {
+    .block h4 {
+        font-size: 1.1rem;
+        padding: 0.5rem 0;
+    }
+
+    .menuAho {
+        padding: 0.5rem 1rem;
+        font-size: 0.95rem;
+    }
+
+    .drop-menu h3 {
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+    }
+}
